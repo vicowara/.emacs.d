@@ -7,7 +7,7 @@
          (setq locale-coding-system 'utf-8))
         ((eq ws 'ns)
          (require 'ucs-normalize)
-         (prefer-coding-system 'utf-8-hfs)
+         (prefer-coding-system 'utf-8)
          (setq file-name-coding-system 'utf-8-hfs)
          (setq locale-coding-system 'utf-8-hfs))))
 
@@ -321,7 +321,7 @@
 
 ;; google-translate.el
 (require 'google-translate)
-
+(require 'google-translate-default-ui)
 ;; キーバインドの設定（お好みで）
 (global-set-key "\C-xt" 'google-translate-at-point)
 (global-set-key "\C-xT" 'google-translate-query-translate)
@@ -380,4 +380,9 @@
 (global-set-key (kbd "C-c n") 'multi-term-next)
 (global-set-key (kbd "C-c p") 'multi-term-prev)
 (global-set-key (kbd "C-c C-t") 'shell-pop)
+
+(setq vr/engine 'pcre2el)
+(global-set-key (kbd "M-%") 'vr/query-replace)
+(global-set-key (kbd "C-M-r") 'vr/isearch-backward)
+(global-set-key (kbd "C-M-s") 'vr/isearch-forward)
 ;;

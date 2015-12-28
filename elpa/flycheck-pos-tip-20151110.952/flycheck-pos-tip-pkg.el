@@ -1,1 +1,0 @@
-(define-package "flycheck-pos-tip" "20151110.952" "Flycheck errors display in tooltip" '((dash "2.12") (flycheck "0.18") (pos-tip "0.4.6")) :url "https://github.com/flycheck/flycheck-pos-tip" :keywords '("tools" "convenience"))
