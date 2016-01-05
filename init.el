@@ -34,7 +34,7 @@
   (exec-path-from-shell-initialize))
 
 (when (eq system-type 'darwin)
-;; 英語
+  ;; 英語
   (set-face-attribute 'default nil
                       :family "Menlo" ;; font
                       :height 130)    ;; font size
@@ -48,7 +48,7 @@
   ;; 半角と全角の比を1:2にしたければ
   (setq face-font-rescale-alist
         ;;        '((".*Hiragino_Mincho_pro.*" . 1.2)))
-      '((".*Hiragino_Kaku_Gothic_ProN.*" . 1.2)));; Mac用フォント設定
+        '((".*Hiragino_Kaku_Gothic_ProN.*" . 1.2)));; Mac用フォント設定
   )
 
 ;; スタートアップ非表示
@@ -71,7 +71,7 @@
 (column-number-mode t)
 (line-number-mode t)
 
-;; C-h を Backspace として使い、
+;; C-h を Backspace として使い，
 ;; C-c h を HELP に割当てる
 (keyboard-translate ?\C-h ?\C-?)
 (global-set-key "\C-h" nil)
@@ -105,7 +105,7 @@
 ;; C-mode
 (add-hook 'c-mode-common-hook
           '(lambda ()
-             ;; センテンスの終了である ';' を入力したら、自動改行+インデント
+             ;; センテンスの終了である ';' を入力したら，自動改行+インデント
              (c-toggle-auto-hungry-state 1)
              ;; RET キーで自動改行+インデント
              (define-key c-mode-base-map "\C-m" 'newline-and-indent)
@@ -114,7 +114,7 @@
              (setq c-basic-offset 4)
              ;; 演算式が複数行にまたがるときのオフセット
              (c-set-offset 'statement-cont 'c-lineup-math)
-))
+             ))
 
 ;;;; mode-compile
 (autoload 'mode-compile "mode-compile"
@@ -124,7 +124,7 @@
   "Command to kill a compilation launched by `mode-compile'" t)
 (global-set-key "\C-ck" 'mode-compile-kill)
 
- 
+
 ;; 全てバッファを自動的にセーブする
 (setq mode-compile-always-save-buffer-p t)
 ;; コマンドをいちいち確認しない
@@ -133,7 +133,7 @@
 (setq mode-compile-expert-p t)
 ;; メッセージを読み終わるまで待つ時間
 (setq mode-compile-reading-time 0)
- 
+
 ;; コンパイルが完了したらウィンドウを閉じる
 (defun compile-autoclose (buffer string)
   (cond ((string-match "finished" string)
@@ -196,34 +196,34 @@
   ;; Emulate `kill-line' in helm minibuffer
   (setq helm-delete-minibuffer-contents-from-point t)
   (defadvice helm-delete-minibuffer-contents (before helm-emulate-kill-line activate)
-   "Emulate `kill-line' in helm minibuffer"
-   (kill-new (buffer-substring (point) (field-end))))
+    "Emulate `kill-line' in helm minibuffer"
+    (kill-new (buffer-substring (point) (field-end))))
 
-(defadvice helm-ff-kill-or-find-buffer-fname (around execute-only-if-exist activate)
- "Execute command only if CANDIDATE exists"
- (when (file-exists-p candidate)
-  ad-do-it))
+  (defadvice helm-ff-kill-or-find-buffer-fname (around execute-only-if-exist activate)
+    "Execute command only if CANDIDATE exists"
+    (when (file-exists-p candidate)
+      ad-do-it))
 
-(defadvice helm-ff-transform-fname-for-completion (around my-transform activate)
-  "Transform the pattern to reflect my intention"
- (let* ((pattern (ad-get-arg 0))
-        (input-pattern (file-name-nondirectory pattern))
-        (dirname (file-name-directory pattern)))
-   (setq input-pattern (replace-regexp-in-string "\\." "\\\\." input-pattern))
-  (setq ad-return-value
-        (concat dirname
-           (if (string-match "^\\^" input-pattern)
-        ;; '^' is a pattern for basename
-        ;; and not required because the directory name is prepended
-        (substring input-pattern 1)
-     (concat ".*" input-pattern)))))))
+  (defadvice helm-ff-transform-fname-for-completion (around my-transform activate)
+    "Transform the pattern to reflect my intention"
+    (let* ((pattern (ad-get-arg 0))
+           (input-pattern (file-name-nondirectory pattern))
+           (dirname (file-name-directory pattern)))
+      (setq input-pattern (replace-regexp-in-string "\\." "\\\\." input-pattern))
+      (setq ad-return-value
+            (concat dirname
+                    (if (string-match "^\\^" input-pattern)
+                        ;; '^' is a pattern for basename
+                        ;; and not required because the directory name is prepended
+                        (substring input-pattern 1)
+                      (concat ".*" input-pattern)))))))
 
      ;;;; mode-compile
 (autoload 'mode-compile "mode-compile"
-"Command to compile current buffer file based on the major mode" t)
+  "Command to compile current buffer file based on the major mode" t)
 (global-set-key "\C-cc" 'mode-compile)
-     (autoload 'mode-compile-kill "mode-compile"
-"Command to kill a compilation launched by `mode-compile'" t)
+(autoload 'mode-compile-kill "mode-compile"
+  "Command to kill a compilation launched by `mode-compile'" t)
 (global-set-key "\C-ck" 'mode-compile-kill)
 
 ;; 全てバッファを自動的にセーブする
@@ -246,42 +246,42 @@
 
 ;; python
 (add-hook 'python-mode-hook '(lambda ()
-                                   (define-key python-mode-map "\C-m" 'newline-and-indent)
-                                   (define-key (current-local-map) "\C-h" 'python-backspace)
-                                   (setq indent-tabs-mode nil)
-                                   (setq python-indent-offset 4)
-                                   ))
+                               (define-key python-mode-map "\C-m" 'newline-and-indent)
+                               (define-key (current-local-map) "\C-h" 'python-backspace)
+                               (setq indent-tabs-mode nil)
+                               (setq python-indent-offset 4)
+                               ))
 
 (defun my-short-buffer-file-coding-system (&optional default-coding)
   (let ((coding-str (format "%S" buffer-file-coding-system)))
-   (cond ((string-match "shift-jis" coding-str) 'shift_jis)
-        ((string-match "euc-jp" coding-str) 'euc-jp)
-   ((string-match "utf-8" coding-str) 'utf-8)
-   (t (or default-coding 'utf-8)))))
+    (cond ((string-match "shift-jis" coding-str) 'shift_jis)
+          ((string-match "euc-jp" coding-str) 'euc-jp)
+          ((string-match "utf-8" coding-str) 'utf-8)
+          (t (or default-coding 'utf-8)))))
 
 (defun my-insert-file-local-coding ()
   "ファイルの先頭に `coding:' を自動挿入する"
- (interactive)
- (save-excursion
-   (goto-line 2) (end-of-line) ; ２行目の行末の移動
-  (let ((limit (point)))
-    (goto-char (point-min))
-   (unless (search-forward "coding:" limit t) ; 2行目以内に `coding:'がない
-     (goto-char (point-min))
-    ;; #!で始まる場合２行目に記述
-    (when (and (< (+ 2 (point-min)) (point-max))
-               (string= (buffer-substring (point-min) (+ 2 (point-min))) "#!"))
-      (unless (search-forward "\n" nil t) ; `#!'で始まり末尾に改行が無い場合
-       (insert "\n")))                   ; 改行を挿入
-    (let ((st (point)))
-      (insert (format "-*- coding: %S -*-\n" (my-short-buffer-file-coding-system)))
-     (comment-region st (point)))))))
+  (interactive)
+  (save-excursion
+    (goto-line 2) (end-of-line) ; ２行目の行末の移動
+    (let ((limit (point)))
+      (goto-char (point-min))
+      (unless (search-forward "coding:" limit t) ; 2行目以内に `coding:'がない
+        (goto-char (point-min))
+        ;; #!で始まる場合２行目に記述
+        (when (and (< (+ 2 (point-min)) (point-max))
+                   (string= (buffer-substring (point-min) (+ 2 (point-min))) "#!"))
+          (unless (search-forward "\n" nil t) ; `#!'で始まり末尾に改行が無い場合
+            (insert "\n")))                   ; 改行を挿入
+        (let ((st (point)))
+          (insert (format "-*- coding: %S -*-\n" (my-short-buffer-file-coding-system)))
+          (comment-region st (point)))))))
 
 (add-hook 'python-mode-hook 'my-insert-file-local-coding)
 
 (eval-after-load 'flycheck
-      '(custom-set-variables
-       '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
+  '(custom-set-variables
+    '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
 
 (autoload 'po-mode "po-mode+"
   "Major mode for translators to edit PO files" t)
@@ -315,7 +315,6 @@
 (add-hook 'haskell-mode-hook 'font-lock-mode)
 (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
 
-
 (require 'twittering-mode)
 (setq twittering-use-master-password t)
 
@@ -328,12 +327,12 @@
 
 ;; 翻訳のデフォルト値を設定（en -> ja）
 (custom-set-variables
-  '(google-translate-default-source-language "en")
-  '(google-translate-default-target-language "ja"))
+ '(google-translate-default-source-language "en")
+ '(google-translate-default-target-language "ja"))
 
 ;; popwin.el
 (require 'popwin)
-;; おまじない（よく分かってない、、）
+;; おまじない（よく分かってない，，）
 (setq display-buffer-function 'popwin:display-buffer)
 ;; ポップアップを画面下に表示
 (setq popwin:popup-window-position 'bottom)
@@ -385,4 +384,20 @@
 (global-set-key (kbd "M-%") 'vr/query-replace)
 (global-set-key (kbd "C-M-r") 'vr/isearch-backward)
 (global-set-key (kbd "C-M-s") 'vr/isearch-forward)
+
+(defun replace-dot-comma ()
+  "s/。/．/g; s/、/，/g;する"
+  (interactive)
+  (let ((curpos (point)))
+    (goto-char (point-min))
+    (while (search-forward "。" nil t) (replace-match "．"))
+    
+    (goto-char (point-min))
+    (while (search-forward "、" nil t) (replace-match "，"))
+    (goto-char curpos)
+    ))
+
+(add-hook 'tex-mode-hook
+          '(lambda ()
+             (add-hook 'before-save-hook 'replace-dot-comma nil 'make-it-local)))
 ;;
