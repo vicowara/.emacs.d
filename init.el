@@ -9,7 +9,12 @@
          (require 'ucs-normalize)
          (prefer-coding-system 'utf-8)
          (setq file-name-coding-system 'utf-8-hfs)
-         (setq locale-coding-system 'utf-8-hfs))))
+         (setq locale-coding-system 'utf-8-hfs)
+         ;; システムに装飾キー渡さない
+         (setq mac-pass-control-to-system nil)
+         (setq mac-pass-command-to-system nil)
+         (setq mac-pass-option-to-system nil)
+         )))
 
 (tool-bar-mode 0)
 
@@ -399,5 +404,45 @@
 
 (add-hook 'tex-mode-hook
           '(lambda ()
-             (add-hook 'before-save-hook 'replace-dot-comma nil 'make-it-local)))
+             (add-hook 'before-save-hook 'replace-dot-comma nil 'make-it-local)
+             (flyspell-mode t)
+             ))
+(setq-default ispell-program-name "aspell")
+(eval-after-load "ispell"
+  '(add-to-list 'ispell-skip-region-alist '("[^\000-\377]+")))
+
+(when (require 'skk nil t)
+  (setq skk-large-jisyo "~/Library/Application Support/AquaSKK/SKK-JISYO.L") ; 一応
+  (setq skk-server-host "localhost") ; AquaSKK のサーバー機能を利用
+  (setq skk-server-portnum 1178)	   ; ポートは標準
+  (setq skk-share-private-jisyo t)   ; 複数 skk 辞書を共有
+  (setq skk-tut-file "~/.emacs.d/SKK.tut")
+  (setq skk-show-candidates-always-pop-to-buffer t) ; 変換候補の表示位置
+  (setq skk-henkan-show-candidates-rows 2) ; 候補表示件数を2列に
+  
+  ;; 動的候補表示
+  (setq skk-dcomp-activate t)			 ; 動的補完
+  (setq skk-dcomp-multiple-activate t) ; 動的補完の複数候補表示
+  (setq skk-dcomp-multiple-rows 10)	 ; 動的補完の候補表示件数
+  ;; 動的補完の複数表示群のフェイス
+  (set-face-foreground 'skk-dcomp-multiple-face "Black")
+  (set-face-background 'skk-dcomp-multiple-face "LightGoldenrodYellow")
+  (set-face-bold-p 'skk-dcomp-multiple-face nil)
+  ;; 動的補完の複数表示郡の補完部分のフェイス
+  (set-face-foreground 'skk-dcomp-multiple-trailing-face "dim gray")
+  (set-face-bold-p 'skk-dcomp-multiple-trailing-face nil)
+  ;; 動的補完の複数表示郡の選択対象のフェイス
+  (set-face-foreground 'skk-dcomp-multiple-selected-face "White")
+  (set-face-background 'skk-dcomp-multiple-selected-face "LightGoldenrod4")
+  (set-face-bold-p 'skk-dcomp-multiple-selected-face nil)
+  ;; 動的補完時に下で次の補完へ
+  (define-key skk-j-mode-map (kbd "<down>") 'skk-completion-wrapper)
+  (require 'skk-hint)							; ヒント
+  (add-hook 'skk-load-hook ; 自動的に入力モードを切り替え
+            (lambda ()
+              (require 'context-skk)))
+  
+  (global-set-key (kbd "C-x j") 'skk-auto-fill-mode) ;;良い感じに改行を自動入力してくれる機能
+  (setq default-input-method "japanese-skk")         ;;emacs上での日本語入力にskkをつかう
+  (require 'skk-study))                              ;;変換学習機能の追加
 ;;
