@@ -14,6 +14,13 @@
          (setq mac-pass-control-to-system nil)
          (setq mac-pass-command-to-system nil)
          (setq mac-pass-option-to-system nil)
+         )
+        ((eq ws 'x)
+         (set-default-coding-systems 'utf-8)
+         (set-keyboard-coding-system 'utf-8)
+         (set-terminal-coding-system 'utf-8)
+         (set-buffer-file-coding-system 'utf-8)
+         (prefer-coding-system 'utf-8)
          )))
 
 (tool-bar-mode 0)
@@ -417,8 +424,6 @@
   (set-face-foreground 'skk-dcomp-multiple-selected-face "White")
   (set-face-background 'skk-dcomp-multiple-selected-face "LightGoldenrod4")
   (set-face-bold-p 'skk-dcomp-multiple-selected-face nil)
-  ;; 動的補完時に下で次の補完へ
-  (define-key skk-j-mode-map (kbd "<down>") 'skk-completion-wrapper)
   (require 'skk-hint)							; ヒント
   (setq skk-hint-start-char 58); hintを:に
   (add-hook 'skk-load-hook ; 自動的に入力モードを切り替え
