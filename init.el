@@ -419,6 +419,7 @@
   (setq skk-tut-file "~/.emacs.d/SKK.tut")
   (setq skk-show-candidates-always-pop-to-buffer t) ; 変換候補の表示位置
   (setq skk-henkan-show-candidates-rows 2) ; 候補表示件数を2列に
+  (setq skk-search-katakana t)
   
   ;; 動的候補表示
   (setq skk-dcomp-activate t)			 ; 動的補完
