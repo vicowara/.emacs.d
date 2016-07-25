@@ -240,6 +240,19 @@
 (eval-after-load 'flycheck
   '(define-key flycheck-mode-map (kbd "C-c ! h") 'helm-flycheck))
 
+(defun switch-flycheck-or-flymake ()
+  (if (file-exists-p "Makefile")
+      (progn
+        (flymake-mode t)
+        (flycheck-mode -1)
+        )
+    (flymake-mode -1)
+    (flycheck-mode t))
+  )
+
+(add-hook 'c-mode-hook '(lambda ()
+                          (switch-flycheck-or-flymake)
+                          ))
 
 ;; python
 (add-hook 'python-mode-hook '(lambda ()
