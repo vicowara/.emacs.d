@@ -240,8 +240,19 @@
 (eval-after-load 'flycheck
   '(define-key flycheck-mode-map (kbd "C-c ! h") 'helm-flycheck))
 
-(defun switch-flycheck-or-flymake ()
+(defun has-check-syntax ()
   (if (file-exists-p "Makefile")
+    (progn (with-temp-buffer
+       (insert-file-contents "Makefile")
+       (let ((buffer (buffer-string)))
+         (if (string-match "check-syntax" buffer)
+             t
+           nil)
+         )))
+    nil))
+
+(defun switch-flycheck-or-flymake ()
+  (if (has-check-syntax)
       (progn
         (flymake-mode t)
         (flycheck-mode -1)
