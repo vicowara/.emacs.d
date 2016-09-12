@@ -63,6 +63,23 @@
         '((".*Hiragino_Kaku_Gothic_ProN.*" . 1.2)));; Mac用フォント設定
   )
 
+(when (eq system-type 'gnu/linux)
+  ;; 英語
+  (set-face-attribute 'default nil
+                      :family "Inconsolata" ;; font
+                      :height 130)    ;; font size
+  
+  ;; 日本語
+  (set-fontset-font
+   nil 'japanese-jisx0208
+   (font-spec :family "Source Han Sans JP")) ;; font
+  
+  ;; 半角と全角の比を1:2にしたければ
+  (setq face-font-rescale-alist
+        '((".*Source_Han_Sans_JP.*" . 1.2)));; Linux用フォント設定
+  )
+
+
 ;; スタートアップ非表示
 (setq inhibit-startup-message t)
 
@@ -356,29 +373,6 @@
 
 (smartparens-global-mode t)
 
-
-;; (require 'cedet)
-;; ;; Semantic
-;; (global-ede-mode 1)
-;; (semantic-mode t)
-;; (global-semantic-idle-scheduler-mode)
-;; (global-semantic-idle-completions-mode)
-;; (global-semantic-decoration-mode)
-;; (global-semantic-highlight-func-mode)
-;; (global-semantic-show-unmatched-syntax-mode)
-;; (global-semanticdb-minor-mode)
-
-;; ;; CC-mode
-;; (add-hook 'c-mode-hook '(lambda ()
-;;         (setq ac-sources (append '(ac-source-semantic) ac-sources))
-;;         (local-set-key (kbd "RET") 'newline-and-indent)
-;;         (linum-mode t)
-;;         (semantic-mode t)))
-
-;; (add-hook 'c-mode-common-hook '(lambda ()
-;;         (setq ac-sources (append '(ac-source-semantic) ac-sources))
-;; ))
-
 ;; expand region
 (require 'expand-region)
 (global-set-key (kbd "C-@") 'er/expand-region)
@@ -467,6 +461,16 @@
   (setq skk-backup-jisyo "~/Dropbox/emacs/SKK/skk-jisyo.utf8.bak")
   (setq skk-study-file "~/Dropbox/emacs/SKK/skk-study.utf8")
   (setq skk-study-backup-file "~/Dropbox/emacs/SKK/skk-study.utf8.bak")
+
+  (setq skk-rom-kana-rule-list
+        (append skk-rom-kana-rule-list
+                '(
+                  ("wha" nil ("うぁ" . "ウァ"))
+                  ("whi" nil ("うぃ" . "ウィ"))
+                  ("whu" nil ("う" . "ウ"))
+                  ("whe" nil ("うぇ" . "ウェ"))
+                  ("who" nil ("うぉ" . "ウォ"))
+                  )))
   )
 
 (require 'multiple-cursors)
@@ -493,4 +497,33 @@
 (when (require 'bison-mode nil t)
   (add-to-list 'auto-mode-alist '("\\.y$" . bison-mode))
   (add-to-list 'auto-mode-alist '("\\.l$" . bison-mode)))
+
+(semantic-mode 1)
+(global-semantic-idle-scheduler-mode 1)
+(global-semanticdb-minor-mode 1)
+(global-semantic-idle-completions-mode 1)
+(global-semantic-decoration-mode 1)
+(global-semantic-stickyfunc-mode 1)
+(global-semantic-mru-bookmark-mode 1)
+
+(add-hook 'c-mode-common-hook   'hs-minor-mode)
+(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
+(add-hook 'java-mode-hook       'hs-minor-mode)
+(add-hook 'lisp-mode-hook       'hs-minor-mode)
+(add-hook 'perl-mode-hook       'hs-minor-mode)
+(add-hook 'python-mode-hook     'hs-minor-mode)
+(add-hook 'ruby-mode-hook       'hs-minor-mode)
+(add-hook 'sh-mode-hook         'hs-minor-mode)
+
+(global-set-key (kbd "C-<tab>") 'hs-toggle-hiding)
+
+(require 'yasnippet)
+(require 'helm-c-yasnippet)
+(setq helm-yas-space-match-any-greedy t)
+(global-set-key (kbd "C-c y") 'helm-yas-complete)
+(push '("emacs.+/snippets/" . snippet-mode) auto-mode-alist)
+(yas-global-mode 1)
+
+(setq enable-remote-dir-locals 1)
+
 ;;
