@@ -7,5 +7,5 @@ url
 games
 auto-save-list
 eshell
-.elc
-.el~
+*.elc
+*.el~
