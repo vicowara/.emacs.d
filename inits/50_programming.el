@@ -14,13 +14,13 @@
 
 (defun has-check-syntax ()
   (if (file-exists-p "Makefile")
-    (progn (with-temp-buffer
-       (insert-file-contents "Makefile")
-       (let ((buffer (buffer-string)))
-         (if (string-match "check-syntax" buffer)
-             t
-           nil)
-         )))
+      (progn (with-temp-buffer
+               (insert-file-contents "Makefile")
+               (let ((buffer (buffer-string)))
+                 (if (string-match "check-syntax" buffer)
+                     t
+                   nil)
+                 )))
     nil))
 
 (defun switch-flycheck-or-flymake ()
@@ -62,6 +62,12 @@
 (global-set-key (kbd "M-RET m") 'srefactor-lisp-format-sexp)
 (global-set-key (kbd "M-RET d") 'srefactor-lisp-format-defun)
 (global-set-key (kbd "M-RET b") 'srefactor-lisp-format-buffer)
+
+
+
+;;;; cscope
+(require 'xcscope)
+(cscope-setup)
 
 
 
