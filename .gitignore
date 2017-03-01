@@ -7,5 +7,6 @@ url
 games
 auto-save-list
 eshell
+srecode-map.el
 *.elc
 *.el~
