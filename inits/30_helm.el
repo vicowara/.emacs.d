@@ -39,3 +39,7 @@
                       ;; and not required because the directory name is prepended
                       (substring input-pattern 1)
                     (concat ".*" input-pattern))))))
+
+(require 'ac-helm)  ;; Not necessary if using ELPA package
+(global-set-key (kbd "C-:") 'ac-complete-with-helm)
+(define-key ac-complete-mode-map (kbd "C-:") 'ac-complete-with-helm)
