@@ -54,6 +54,8 @@
 
 (add-hook 'helm-gtags-mode-hook
           '(lambda ()
+             ;; do what i mean
+             (local-set-key (kbd "M-.") 'helm-gtags-dwim)
              ;;入力されたタグの定義元へジャンプ
              (local-set-key (kbd "M-t") 'helm-gtags-find-tag)
              ;;入力タグを参照する場所へジャンプ
