@@ -1408,7 +1408,7 @@
 	   [(0 0 1)
 	    nil "get stuff from pinboard" single])
  (picpocket .
-	    [(22)
+	    [(25)
 	     nil "Image viewer" single])
  (pickup .
 	 [(0 0 3)
@@ -1682,6 +1682,7 @@
  (org-journal .
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	      [(1 11 1)
 =======
 	      [(1 11 0)
@@ -1689,6 +1690,9 @@
 =======
 	      [(1 11 1)
 >>>>>>> 2248089... UPDATE: elpa
+=======
+	      [(1 11 2)
+>>>>>>> 61732be... update elpa
 	       nil "a simple org-mode based journaling mode" single])
  (org-gnome .
 	    [(0 1)
@@ -1910,7 +1914,7 @@
 	       (1 1)))
 	     "Mote minor mode" single])
  (monroe .
-	 [(0 2 0)
+	 [(0 3 1)
 	  nil "Yet another client for nREPL" single])
  (monokai-theme .
 		[(0 0 12)
@@ -2070,7 +2074,7 @@
 	       [(1 0 0)
 		nil "collection of faces for markup language modes" single])
  (markdown-toc .
-	       [(0 1 0)
+	       [(0 1 2)
 		((markdown-mode
 		  (2 1))
 		 (dash
@@ -3797,7 +3801,7 @@
 	       [(0 2 2)
 		nil "Aspell extra dictionary for Drupal" tar])
  (drupal-mode .
-	      [(0 7 0)
+	      [(0 7 1)
 	       ((php-mode
 		 (1 5 0)))
 	       "Advanced minor mode for Drupal development" tar])
@@ -3973,7 +3977,7 @@
 	 [(0 1 1)
 	  nil "Table component for Emacs Lisp" single])
  (csharp-mode .
-	      [(0 8 12)
+	      [(0 9 0)
 	       ((cl-lib
 		 (0 5)))
 	       "C# mode derived mode" tar])
@@ -4545,7 +4549,7 @@
 		 (24 1)))
 	       "Ansible documentation Minor Mode" single])
  (annotate .
-	   [(0 4 4)
+	   [(0 4 6)
 	    nil "annotate files without changing them" single])
  (angular-snippets .
 		   [(0 2 3)
