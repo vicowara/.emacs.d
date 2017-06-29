@@ -92,21 +92,6 @@
 (when (eq system-type 'darwin)
   (setq ns-command-modifier (quote meta)))
 
-;; (require 'tabbar)
-;; (tabbar-mode)
-;; (global-set-key "\M-]" 'tabbar-forward)  ; 次のタブ
-;; (global-set-key "\M-[" 'tabbar-backward) ; 前のタブ
-;; ;; タブ上でマウスホイールを使わない
-;; (tabbar-mwheel-mode nil)
-;; ;; グループを使わない
-;; (setq tabbar-buffer-groups-function nil)
-;; ;; 左側のボタンを消す
-;; (dolist (btn '(tabbar-buffer-home-button
-;;                tabbar-scroll-left-button
-;;                tabbar-scroll-right-button))
-;;   (set btn (cons (cons "" nil)
-;;                  (cons "" nil))))
-
 ;; C-mode
 (add-hook 'c-mode-common-hook
           '(lambda ()
@@ -284,16 +269,9 @@
 
 (add-hook 'python-mode-hook 'my-insert-file-local-coding)
 
-(eval-after-load 'flycheck
-  '(custom-set-variables
-    '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
+(with-eval-after-load 'flycheck
+  (flycheck-pos-tip-mode))
 
-(autoload 'po-mode "po-mode+"
-  "Major mode for translators to edit PO files" t)
-(setq auto-mode-alist
-      (cons (cons "\\.po$" 'po-mode) auto-mode-alist))
-
-(require 'po-mode)
 (require 'magit)
 (setq magit-auto-revert-mode nil)
 (setq magit-last-seen-setup-instructions "1.4.0")
@@ -412,11 +390,14 @@
   '(add-to-list 'ispell-skip-region-alist '("[^\000-\377]+")))
 
 (when (require 'skk nil t)
-  (setq skk-large-jisyo "~/Library/Application Support/AquaSKK/SKK-JISYO.L") ; 一応
   (setq skk-server-host "localhost") ; AquaSKK のサーバー機能を利用
   (setq skk-server-portnum 1178)	   ; ポートは標準
   (setq skk-share-private-jisyo t)   ; 複数 skk 辞書を共有
-  (setq skk-tut-file "~/.emacs.d/SKK.tut")
+  (setq skk-tut-file "~/Dropbox/emacs/SKK/SKK.tut")
+;  (setq skk-tut-file "~/.emacs.d/SKK.tut")
+;  (setq skk-show-tooltip t)
+;  (setq skk-inline-show t)
+  (setq skk-show-annotation t)
   (setq skk-show-candidates-always-pop-to-buffer t) ; 変換候補の表示位置
   (setq skk-henkan-show-candidates-rows 2) ; 候補表示件数を2列に
   (setq skk-search-katakana t)
@@ -439,10 +420,11 @@
   ;; 動的補完時に下で次の補完へ
   (define-key skk-j-mode-map (kbd "<down>") 'skk-completion-wrapper)
   (require 'skk-hint)							; ヒント
+  (setq skk-hint-start-char 58); hintを:に
   (add-hook 'skk-load-hook ; 自動的に入力モードを切り替え
             (lambda ()
               (require 'context-skk)))
-  
+
   (global-set-key (kbd "C-x j") 'skk-auto-fill-mode) ;;良い感じに改行を自動入力してくれる機能
   (setq default-input-method "japanese-skk")         ;;emacs上での日本語入力にskkをつかう
   (require 'skk-study)                              ;;変換学習機能の追加
@@ -482,3 +464,4 @@
 (when (require 'bison-mode nil t)
   (add-to-list 'auto-mode-alist '("\\.y$" . bison-mode))
   (add-to-list 'auto-mode-alist '("\\.l$" . bison-mode)))
+;;
