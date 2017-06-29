@@ -445,5 +445,40 @@
   
   (global-set-key (kbd "C-x j") 'skk-auto-fill-mode) ;;良い感じに改行を自動入力してくれる機能
   (setq default-input-method "japanese-skk")         ;;emacs上での日本語入力にskkをつかう
-  (require 'skk-study))                              ;;変換学習機能の追加
-;;
+  (require 'skk-study)                              ;;変換学習機能の追加
+  (setq skk-sticky-key ";")
+  (setq skk-jisyo-code 'utf-8)
+  (setq skk-user-directory "~/Dropbox/emacs/SKK")
+  (setq skk-large-jisyo "~/Dropbox/emacs/SKK/SKK-JISYO.L.utf8")
+  (setq skk-record-file "~/Dropbox/emacs/SKK/skk-record.utf8")
+  (setq skk-emacs-id-file "~/Dropbox/emacs/SKK/skk-emacs-id.utf8")
+  (setq skk-jisyo "~/Dropbox/emacs/SKK/skk-jisyo.utf8")
+  (setq skk-backup-jisyo "~/Dropbox/emacs/SKK/skk-jisyo.utf8.bak")
+  (setq skk-study-file "~/Dropbox/emacs/SKK/skk-study.utf8")
+  (setq skk-study-backup-file "~/Dropbox/emacs/SKK/skk-study.utf8.bak")
+  )
+
+(require 'multiple-cursors)
+(require 'smartrep)
+(declare-function smartrep-define-key "smartrep")
+(global-set-key (kbd "C-M-c") 'mc/edit-lines)
+(global-set-key (kbd "C-M-r") 'mc/mark-all-in-region)
+(global-unset-key "\C-t")
+(smartrep-define-key global-map "C-t"
+                     '(("C-t"      . 'mc/mark-next-like-this)
+                       ("n"        . 'mc/mark-next-like-this)
+                       ("p"        . 'mc/mark-previous-like-this)
+                       ("m"        . 'mc/mark-more-like-this-extended)
+                       ("u"        . 'mc/unmark-next-like-this)
+                       ("U"        . 'mc/unmark-previous-like-this)
+                       ("s"        . 'mc/skip-to-next-like-this)
+                       ("S"        . 'mc/skip-to-previous-like-this)
+                       ("*"        . 'mc/mark-all-like-this)
+                       ("d"        . 'mc/mark-all-like-this-dwim)
+                       ("i"        . 'mc/insert-numbers)
+                       ("o"        . 'mc/sort-regions)
+                       ("O"        . 'mc/reverse-regions)))
+
+(when (require 'bison-mode nil t)
+  (add-to-list 'auto-mode-alist '("\\.y$" . bison-mode))
+  (add-to-list 'auto-mode-alist '("\\.l$" . bison-mode)))
