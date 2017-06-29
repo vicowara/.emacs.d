@@ -65,12 +65,6 @@
 
 
 
-;;;; cscope
-(require 'xcscope)
-(cscope-setup)
-
-
-
 ;;;; hs-minor-mode
 (add-hook 'c-mode-common-hook   'hs-minor-mode)
 (add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
@@ -109,6 +103,15 @@
              (c-set-offset 'statement-cont 'c-lineup-math)
              (switch-flycheck-or-flymake)
              ))
+;; gtags
+(add-hook 'c-mode-hook 'helm-gtags-mode)
+(add-hook 'c++-mode-hook 'helm-gtags-mode)
+(add-hook 'asm-mode-hook 'helm-gtags-mode)
+
+;; cscope
+(add-hook 'c-mode-hook 'helm-cscope-mode)
+(add-hook 'c++-mode-hook 'helm-cscope-mode)
+(add-hook 'asm-mode-hook 'helm-cscope-mode)
 
 
 

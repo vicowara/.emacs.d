@@ -1,3 +1,4 @@
+(require 'helm-config)
 (helm-mode 1)
 
 (define-key global-map (kbd "M-x")     'helm-M-x)
@@ -43,3 +44,35 @@
 (require 'ac-helm)  ;; Not necessary if using ELPA package
 (global-set-key (kbd "C-:") 'ac-complete-with-helm)
 (define-key ac-complete-mode-map (kbd "C-:") 'ac-complete-with-helm)
+
+(require 'helm-gtags)
+
+(custom-set-variables
+ ;'(helm-gtags-path-style 'relative)
+ '(helm-gtags-ignore-case t)
+ '(helm-gtags-auto-update t))
+
+(add-hook 'helm-gtags-mode-hook
+          '(lambda ()
+             ;;入力されたタグの定義元へジャンプ
+             (local-set-key (kbd "M-t") 'helm-gtags-find-tag)
+             ;;入力タグを参照する場所へジャンプ
+             (local-set-key (kbd "M-r") 'helm-gtags-find-rtag)
+             ;;入力したシンボルを参照する場所へジャンプ
+             (local-set-key (kbd "M-s") 'helm-gtags-find-symbol)
+             ;;タグ一覧からタグを選択し, その定義元にジャンプする
+             (local-set-key (kbd "M-l") 'helm-gtags-select)
+             ;;ジャンプ前の場所に戻る
+             (local-set-key (kbd "M-,") 'helm-gtags-pop-stack)
+             (local-set-key (kbd "M-g M-p") 'helm-gtags-parse-file)
+             (local-set-key (kbd "C-c <") 'helm-gtags-previous-history)
+             (local-set-key (kbd "C-c >") 'helm-gtags-next-history)))
+
+(require 'helm-cscope)
+(eval-after-load "helm-cscope"
+  '(progn
+     (define-key helm-cscope-mode-map (kbd "C-c s s") 'helm-cscope-find-this-symbol)
+     (define-key helm-cscope-mode-map (kbd "C-c s g") 'helm-cscope-find-global-definition)
+     (define-key helm-cscope-mode-map (kbd "C-c s C") 'helm-cscope-find-called-function)
+     (define-key helm-cscope-mode-map (kbd "C-c s c") 'helm-cscope-find-calling-this-funtcion)
+     (define-key helm-cscope-mode-map (kbd "C-c s u") 'helm-cscope-pop-mark)))
