@@ -1615,7 +1615,11 @@
 	      (1 6 8)))
 	    "Blog from Org mode to wordpress" tar])
  (org-trello .
+<<<<<<< HEAD
 	     [(0 7 9)
+=======
+	     [(0 7 8)
+>>>>>>> 432d631... update elpa
 	      ((request-deferred
 		(0 2 0))
 	       (deferred
@@ -1672,7 +1676,11 @@
 	       (6 1)))
 	     "basic support for magit links" single])
  (org-journal .
+<<<<<<< HEAD
 	      [(1 11 1)
+=======
+	      [(1 11 0)
+>>>>>>> 432d631... update elpa
 	       nil "a simple org-mode based journaling mode" single])
  (org-gnome .
 	    [(0 1)
@@ -2478,7 +2486,11 @@
 	  [(2927)
 	   nil "Adds support for IPython to python-mode.el" single])
  (insert-shebang .
+<<<<<<< HEAD
 		 [(0 9 5)
+=======
+		 [(0 9 4)
+>>>>>>> 432d631... update elpa
 		  nil "Insert shebang line automatically." single])
  (inline-crypt .
 	       [(0 1 4)
@@ -2594,7 +2606,11 @@
 		[(1 1 2)
 		 nil "hungry delete minor mode" single])
  (hugo .
+<<<<<<< HEAD
        [(0 1 2)
+=======
+       [(0 1 1)
+>>>>>>> 432d631... update elpa
 	nil "Helper functions for Hugo" single])
  (httpd .
 	[(1 0 1)
