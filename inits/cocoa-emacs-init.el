@@ -32,3 +32,9 @@
 
 ;; コマンドキーをmetaキー
 (setq ns-command-modifier (quote meta))
+
+;; 円マークをバックスラッシュに
+(define-key global-map [?\¥] [?\\])
+(define-key global-map [?\C-¥] [?\C-\\])
+(define-key global-map [?\M-¥] [?\M-\\])
+(define-key global-map [?\C-\M-¥] [?\C-\M-\\])

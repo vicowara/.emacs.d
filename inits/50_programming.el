@@ -12,6 +12,13 @@
 (with-eval-after-load 'flycheck
   (flycheck-pos-tip-mode))
 
+(with-eval-after-load 'flycheck
+   (require 'flycheck-clang-analyzer)
+   (flycheck-clang-analyzer-setup))
+
+(add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))
+(add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++11")))
+
 (defun has-check-syntax ()
   (if (file-exists-p "Makefile")
       (progn (with-temp-buffer
@@ -86,7 +93,12 @@
 (global-set-key (kbd "C-c y") 'helm-yas-complete)
 (push '("emacs.+/snippets/" . snippet-mode) auto-mode-alist)
 (yas-global-mode 1)
-
+;; 既存スニペットを挿入する
+(define-key yas-minor-mode-map (kbd "C-x i i") 'yas-insert-snippet)
+;; 新規スニペットを作成するバッファを用意する
+(define-key yas-minor-mode-map (kbd "C-x i n") 'yas-new-snippet)
+;; 既存スニペットを閲覧・編集する
+(define-key yas-minor-mode-map (kbd "C-x i v") 'yas-visit-snippet-file)
 
 
 ;;;; C-mode
@@ -231,7 +243,18 @@
 (setq-default ispell-program-name "aspell")
 (eval-after-load "ispell"
   '(add-to-list 'ispell-skip-region-alist '("[^\000-\377]+")))
+;; 拡張子が .tex なら yatex-mode に
+(setq auto-mode-alist
+  (cons (cons "\\.tex$" 'yatex-mode) auto-mode-alist))
+(autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
 
+;; YaTeX が利用する内部コマンドを定義する
+(cond
+  ((eq system-type 'gnu/linux) ;; GNU/Linux なら
+    (setq dvi2-command "evince")) ;; evince で PDF を閲覧
+  ((eq system-type 'darwin) ;; Mac なら
+    (setq dvi2-command "open -a Preview"))) ;; プレビューで
+(add-hook 'yatex-mode-hook '(lambda () (setq auto-fill-function nil)))
 
 
 ;;;; bison-mode

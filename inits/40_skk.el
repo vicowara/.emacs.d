@@ -55,3 +55,5 @@
                 ("whe" nil ("うぇ" . "ウェ"))
                 ("who" nil ("うぉ" . "ウォ"))
                 )))
+
+(setq skk-kutouten-type 'en)
