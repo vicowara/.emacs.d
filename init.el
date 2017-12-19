@@ -8,10 +8,20 @@
 
 ;; package.elの初期化
 (package-initialize)
+
+(setq package-pinned-packages
+      '((web-mode . "melpa-stable")
+        (auto-complete . "melpa-stable")))
+(unless package-archive-contents (package-refresh-contents))
+(dolist (pkg package-selected-packages)
+  (unless (package-installed-p pkg)
+    (package-install pkg)))
+
 ;; 以降はinit-loaderに任せる
 (require 'init-loader)
 (setq init-loader-show-log-after-init nil)
 (init-loader-load "~/.emacs.d/inits/")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -24,10 +34,10 @@
  '(irony-additional-clang-options (quote ("-std=c++11")))
  '(irony-cdb-compilation-databases
    (quote
-    (irony-cdb-libclang irony-cdb-clang-complete irony-cdb-json)))
+	(irony-cdb-libclang irony-cdb-clang-complete irony-cdb-json)))
  '(package-selected-packages
    (quote
-    (yasnippet-snippets yatex pcap-mode flycheck-clang-analyzer flycheck-tip company-irony-c-headers flycheck-irony company company-c-headers company-irony company-jedi irony volatile-highlights undohist twittering-mode tabbar sticky sr-speedbar smartrep smartparens shell-pop semi scala-mode python-mode pyflakes popwin php-mode php-eldoc pcre2el pandoc-mode pandoc multi-term mode-compile migemo markdown-mode magit jedi init-loader helm-gtags helm-flymake helm-flycheck helm-cscope helm-ag haskell-mode gtags graphviz-dot-mode google-translate go-mode ggtags foreign-regexp flycheck-pyflakes flycheck-pos-tip expand-region exec-path-from-shell evil django-mode ddskk codic bison-mode auto-install auto-complete-clang anzu ace-link ac-helm yasnippet)))
+	(srefactor kivy-mode helm-tramp yasnippet-snippets yatex pcap-mode flycheck-clang-analyzer flycheck-tip company-irony-c-headers flycheck-irony company company-c-headers company-irony company-jedi irony volatile-highlights undohist twittering-mode tabbar sticky sr-speedbar smartrep smartparens shell-pop semi scala-mode python-mode pyflakes popwin php-mode php-eldoc pcre2el pandoc-mode pandoc multi-term mode-compile migemo markdown-mode magit init-loader helm-gtags helm-flymake helm-flycheck helm-cscope helm-ag haskell-mode gtags graphviz-dot-mode google-translate go-mode ggtags foreign-regexp flycheck-pyflakes flycheck-pos-tip expand-region exec-path-from-shell django-mode ddskk codic bison-mode auto-install auto-complete-clang anzu ace-link ac-helm yasnippet)))
  '(tab-width 4))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
