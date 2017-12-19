@@ -177,7 +177,7 @@ when the corresponding MENU-ITEM is selected."
         (setq srefactor-ui--current-active-region-end (region-end)))
     (setq srefactor-ui--current-active-region-start nil)
     (setq srefactor-ui--current-active-region-end nil))
-  (condition-case nil
+  (condition-case err-val
       (with-selected-window (select-window (split-window-below))
         (srefactor-ui--menu
             (or (name srefactor-ui--current-active-menu)
@@ -230,7 +230,7 @@ when the corresponding MENU-ITEM is selected."
                    evil-mode)
           (evil-local-mode)))
     (error (srefactor-ui--clean-up-menu-window)
-           (message "Error when creating menu."))))
+           (message "Error when creating menu.(%s)" err-val))))
 
 (defun srefactor-ui--return-option-list (type)
   (let (options)
