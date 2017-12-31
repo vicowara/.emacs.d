@@ -171,6 +171,9 @@
  (winner-mode-enable .
 		     [(0 0 5)
 		      nil "Enables winner mode if its available" tar])
+ (window-shaper .
+		[(20171218 1222)
+		 nil "A utility to easily resize windows within Emacs" single])
  (window-number .
 		[(1 0 3)
 		 nil "Select windows by numbers." single])
