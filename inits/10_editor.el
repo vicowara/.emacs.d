@@ -22,7 +22,7 @@
 (global-set-key "\C-ch" 'help-command)
 
 ;; タブをスペースで扱う
-(setq-default indent-tabs-mode nil)
+;; (setq-default indent-tabs-mode nil)
 
 ;; タブ幅
 (custom-set-variables '(tab-width 4))
@@ -140,3 +140,63 @@
 (setq dired-recursive-copies 'always)
 ;; diredバッファでC-sした時にファイル名だけにマッチするように
 (setq dired-isearch-filenames t)
+
+;; tramp
+(setq projectile-mode-line "Projectile")
+
+;; pandoc
+(sp-with-modes '(pandoc-mode)
+  (sp-local-pair "$" "$"))
+
+;; migemo
+(require 'migemo)
+(setq migemo-command "/usr/local/bin/cmigemo")
+(setq migemo-options '("-q" "--emacs"))
+
+;; 辞書ファイルを環境に合わせて設定してください！
+(setq migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
+
+(setq migemo-user-dictionary nil)
+(setq migemo-regex-dictionary nil)
+(setq migemo-coding-system 'utf-8-unix)
+(load-library "migemo")
+(migemo-init)
+
+
+
+;; org-mode
+(require 'org-install)
+(require 'org)
+
+(global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c a") 'org-agenda)
+
+(require 'org-capture)
+(require 'org-agenda)
+
+;; org-captureで2種類のメモを扱うようにする
+(setq org-capture-templates
+      '(("t" "New TODO" entry
+         (file+headline "~/org/todo.org" "todo")
+         "* TODO %?\n\n")
+        ("m" "Memo" entry
+         (file+headline "~/org/memo.org" "memo")
+         "* %U%?\n%i\n%a")))
+
+;; org-agendaでaを押したら予定表とTODOリストを表示
+(setq org-agenda-custom-commands
+      '(("a" "Agenda and TODO"
+         ((agenda "")
+          (alltodo "")))))
+
+;; org-agendaで扱うファイルは複数可だが、
+;; TODO・予定用のファイルのみ指定
+(setq org-agenda-files '("~/org/todo.org"))
+;; TODOリストに日付つきTODOを表示しない
+(setq org-agenda-todo-ignore-with-date t)
+;; 今日から予定を表示させる
+(setq org-agenda-start-on-weekday nil)
+
+(setq org-use-speed-commands t)
+
+;;

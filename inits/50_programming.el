@@ -9,9 +9,13 @@
 
 (eval-after-load 'flycheck
   '(define-key flycheck-mode-map (kbd "C-c ! h") 'helm-flycheck))
+;(with-eval-after-load 'flycheck
+;  (flycheck-pos-tip-mode))
 (with-eval-after-load 'flycheck
-  (flycheck-pos-tip-mode))
-
+  (add-hook 'flycheck-mode-hook #'flycheck-popup-tip-mode))
+(with-eval-after-load 'flycheck
+  (require 'flycheck-pycheckers)
+  (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
 (with-eval-after-load 'flycheck
    (require 'flycheck-clang-analyzer)
    (flycheck-clang-analyzer-setup))
@@ -108,7 +112,7 @@
              (c-toggle-auto-hungry-state 1)
              ;; RET キーで自動改行+インデント
              (define-key c-mode-base-map "\C-m" 'newline-and-indent)
-             (c-set-style "bsd")
+             (c-set-style "linux")
 
              (setq c-basic-offset 4)
              ;; 演算式が複数行にまたがるときのオフセット
@@ -194,19 +198,26 @@
 ;;;; python-mode
 (require 'epc)
 (require 'python)
-(require 'jedi)
+(require 'flycheck-mypy)
 (add-hook 'python-mode-hook '(lambda ()
                                (define-key python-mode-map "\C-m" 'newline-and-indent)
                                (define-key (current-local-map) "\C-h" 'python-backspace)
                                (setq indent-tabs-mode nil)
                                (setq python-indent-offset 4)
                                ))
-
 (add-hook 'python-mode-hook 'flycheck-mode)
+
+(add-hook 'python-mode-hook (lambda () (setq auto-complete-mode nil)))
+(require 'jedi-core)
+(require 'company-jedi)
+(require 'virtualenvwrapper)
+(require 'auto-virtualenvwrapper)
+(add-hook 'python-mode-hook #'auto-virtualenvwrapper-activate)
+;(setq jedi:environment-virtualenv (list (expand-file-name "~/.emacs.d/.python-environments/")))
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
-
-
+(setq jedi:use-shortcuts t)
+(add-to-list 'company-backends 'company-jedi) ; backendに追加
 
 ;;;; haskell-mode
 (require 'haskell-mode)
@@ -240,6 +251,12 @@
              (add-hook 'before-save-hook 'replace-dot-comma nil 'make-it-local)
              (flyspell-mode t)
              ))
+(add-hook 'yatex-mode-hook
+          '(lambda ()
+             (add-hook 'before-save-hook 'replace-dot-comma nil 'make-it-local)
+             (flyspell-mode t)
+             ))
+
 (setq-default ispell-program-name "aspell")
 (eval-after-load "ispell"
   '(add-to-list 'ispell-skip-region-alist '("[^\000-\377]+")))
