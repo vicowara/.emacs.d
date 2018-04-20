@@ -2,11 +2,14 @@ ac-comphist.dat
 undohist/
 ede-projects.el
 semanticdb/
+elpa/
 tramp
 url
 games
 auto-save-list
 eshell
 srecode-map.el
+bookmarks
+network-security.data
 *.elc
 *.el~
