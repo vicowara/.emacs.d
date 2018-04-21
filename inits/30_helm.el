@@ -81,7 +81,7 @@
 
 ;;; この前にmigemoの設定が必要
 ;;(require 'helm-migemo)
-(helm-migemo-mode 1)
+;(helm-migemo-mode 1)
 ;;; この修正が必要
 (eval-after-load "helm-migemo"
   '(defun helm-compile-source--candidates-in-buffer (source)
@@ -122,8 +122,9 @@
     ad-do-it))
 
 ;;; ace-isearch
-(global-ace-isearch-mode 1)
-(ace-isearch-jump-delay 1)
+(require 'ace-isearch)
+(global-ace-isearch-mode +1)
+(setq ace-isearch-jump-delay 1)
 
 ;;; [2015-03-23 Mon]C-u C-s / C-u C-u C-s
 (defun isearch-forward-or-helm-swoop (use-helm-swoop)

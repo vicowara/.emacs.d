@@ -79,9 +79,10 @@
 
 ;; expand regionの設定
 (require 'expand-region)
+(push 'er/mark-outside-pairs er/try-expand-list)
 (global-set-key (kbd "C-@") 'er/expand-region)
 (global-set-key (kbd "C-M-@") 'er/contract-region) ;; リージョンを狭める
-(transient-mark-mode t)
+;(transient-mark-mode t)
 
 ;; visual-regexpの設定
 (require 'visual-regexp)
